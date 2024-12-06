@@ -21,6 +21,8 @@
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.1.0" />
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="4.7.0" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="5.0.0" />
   </ItemGroup>
 
 </Project>

@@ -42,16 +42,33 @@ public class ItemController : ControllerBase
         return CreatedAtAction(nameof(GetItem), new { id = item.Id }, item);
     }
 
+
+    // update the item
     [HttpPut("{id}")]
     [Authorize]
-    public async Task<IActionResult> UpdateItem(int id, [FromBody] Item item)
+    public async Task<IActionResult> UpdateItem(int id, [FromBody] Item updatedItem)
     {
-        if (id != item.Id)
-            return BadRequest();
+        Console.WriteLine($"Received request to update item with ID: {id}");
+        Console.WriteLine($"Request body: Name = {updatedItem.Name}, Description = {updatedItem.Description}");
 
-        _context.Entry(item).State = EntityState.Modified;
+        // Find the item in the database using the ID from the route
+        var existingItem = await _context.Items!.FindAsync(id);
+        if (existingItem == null)
+        {
+            Console.WriteLine($"Item with ID {id} not found.");
+            return NotFound(); // Return 404 if the item doesn't exist
+        }
+
+        // Update only the fields that need changing
+        existingItem.Name = updatedItem.Name;
+        existingItem.Description = updatedItem.Description;
+
+        // Save changes to the database
         await _context.SaveChangesAsync();
-        return NoContent();
+        Console.WriteLine($"Item with ID {id} successfully updated.");
+
+        // return NoContent(); // 204 No Content to indicate success without a response body
+        return Ok(existingItem);
     }
 
     [HttpDelete("{id}")]
