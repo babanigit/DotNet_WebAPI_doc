@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using DotNet9CookieAuthAPI.Models;
+using DotNet_WebAPI_doc.Models;
 
 namespace DotNet9CookieAuthAPI.Data
 {

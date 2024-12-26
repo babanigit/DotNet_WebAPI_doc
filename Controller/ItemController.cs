@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DotNet9CookieAuthAPI.Data; // Replace with your actual namespace for AppDbContext
-using DotNet9CookieAuthAPI.Models;
+using DotNet9CookieAuthAPI.Data;
+using DotNet_WebAPI_doc.Models; // Replace with your actual namespace for AppDbContext
 
 [Route("api/items")]
 [ApiController]
@@ -19,7 +19,7 @@ public class ItemController : ControllerBase
     [Authorize]
     public async Task<IActionResult> GetItems()
     {
-        var items = await _context.Items!.ToListAsync();
+        var items = await _context.Items.ToListAsync();
         return Ok(items);
     }
 
@@ -27,7 +27,7 @@ public class ItemController : ControllerBase
     [Authorize]
     public async Task<IActionResult> GetItem(int id)
     {
-        var item = await _context.Items!.FindAsync(id);
+        var item = await _context.Items.FindAsync(id);
         if (item == null)
             return NotFound();
         return Ok(item);
@@ -37,7 +37,7 @@ public class ItemController : ControllerBase
     [Authorize]
     public async Task<IActionResult> CreateItem([FromBody] Item item)
     {
-        _context.Items!.Add(item);
+        _context.Items.Add(item);
         await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetItem), new { id = item.Id }, item);
     }
@@ -52,7 +52,7 @@ public class ItemController : ControllerBase
         Console.WriteLine($"Request body: Name = {updatedItem.Name}, Description = {updatedItem.Description}");
 
         // Find the item in the database using the ID from the route
-        var existingItem = await _context.Items!.FindAsync(id);
+        var existingItem = await _context.Items.FindAsync(id);
         if (existingItem == null)
         {
             Console.WriteLine($"Item with ID {id} not found.");
@@ -75,7 +75,7 @@ public class ItemController : ControllerBase
     [Authorize]
     public async Task<IActionResult> DeleteItem(int id)
     {
-        var item = await _context.Items!.FindAsync(id);
+        var item = await _context.Items.FindAsync(id);
         if (item == null)
             return NotFound();
 
