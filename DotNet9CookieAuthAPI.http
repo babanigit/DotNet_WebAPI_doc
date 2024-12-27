@@ -1,6 +1,0 @@
-@DotNet9CookieAuthAPI_HostAddress = http://localhost:5078
-
-GET {{DotNet9CookieAuthAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
